@@ -46,4 +46,5 @@ extern GLFWwindow* window;
 struct Camera{
 	GLuint MVPMatrixID;
 	mat4 projectionMatrix, viewMatrix, MVPMatrix;
+	vec3 position, looking, headsUp;
 };

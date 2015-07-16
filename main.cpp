@@ -172,6 +172,10 @@ int main(){
 		glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
 	#endif
 
+	// Camera matrix info
+	camera.position = vec3(4,0,3); // Camera is at (4,3,3), in World Space
+	camera.looking = vec3(0,0,0); // and looks at the origin
+	camera.headsUp  = vec3(0,1,0);  // Head is up (set to 0,-1,0 to look upside-down)
 	do{
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -180,9 +184,9 @@ int main(){
 
 		// Camera matrix
 		camera.viewMatrix = lookAt(
-			vec3(4,0,3), // Camera is at (4,3,3), in World Space
-			vec3(0,0,0), // and looks at the origin
-			vec3(0,1,0)  // Head is up (set to 0,-1,0 to look upside-down)
+			camera.position,
+			camera.looking, 
+			camera.headsUp  
 		);
 
 		world.Update(deltaTime);
