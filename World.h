@@ -3,6 +3,7 @@
 #include "Ball.h"
 #include "Paddle.h"
 #include "Cube.h"
+#include "ModelLoading.h"
 
 #pragma once
 
@@ -30,6 +31,7 @@ class World{
 	private:
 		Plane* plane;
 		Cube* cube;
+		Mesh* mesh;
 		u8* levelBuffer;
 		u8* textureBuffer;
 		u8 numTextures, levelWidth, levelHeight;

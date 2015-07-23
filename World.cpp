@@ -1,4 +1,5 @@
 #include "World.h"
+#include "ModelLoading.h"
 
 namespace{
 	const u8 MAX_BUFFER_SIZE = 64;
@@ -26,15 +27,17 @@ static void FillBuffer(u8 *src, u8 *dest, u16 &index, u16 const &length){
 
 //TODO: Add functionality later...
 World::World(){
-	plane = new Plane(1, 1);
+	//plane = new Plane(1, 1);
 	//plane->SetScale(vec3(0.15f));
 	//plane->SetPosition(vec3(-1.0f, -1.0f, 0.0f));
 
-	cube = new Cube();
+	//cube = new Cube();
+
+	mesh = new Mesh();
 
 	//GLuint textureID = plane->LoadBMP("test.bmp");
 	//GLuint textureID = plane->LoadBMP("dirt.bmp");
-	GLuint textureID = plane->LoadBMP("world.bmp");
+	//GLuint textureID = plane->LoadBMP("world.bmp");
 
 	//load world...
 	ifstream myfile(LEVEL_0);
@@ -132,33 +135,26 @@ unsigned char World::FindChar(const char* buffer, const char& c){
 
 //TODO: Add functionality later...
 World::~World(){
-	delete plane;
-	plane = NULL;
+	//delete plane;
+	//plane = NULL;
 
-	delete cube;
-	cube = NULL;
+	//delete cube;
+	//cube = NULL;
+
+	delete mesh;
+	mesh = NULL;
 }
 
 void World::Update(const float& deltaTime){
 
 	//plane->Update(deltaTime);
-	cube->Update(deltaTime);
-	
-	if(glfwGetKey(window, GLFW_KEY_LEFT)){
-			//
-			//cube->position.x -= 0.001f;
-			//cube->position.z += 0.001f;
-		}
-
-		if(glfwGetKey(window, GLFW_KEY_RIGHT)){
-			//
-			//cube->position.x += 0.001f;
-			//cube->position.z -= 0.001f;
-		}
+	//cube->Update(deltaTime);
+	mesh->Update(deltaTime);
 	
 }
 
 void World::Render(const Camera& camera){
 	//plane->Render(camera);
-	cube->Render(camera);
+	//cube->Render(camera);
+	mesh->Render(camera);
 }

@@ -235,7 +235,7 @@ int main(){
 		if(glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS){
 			//camera.position.x -= 0.001f;
 			camera.position = LinearInterpolate(camera.position, vec3(4,0,0), 0.04f);
-			camera.looking = LinearInterpolate(camera.looking, vec3(0,0,0)), 1.0f;
+			camera.looking = LinearInterpolate(camera.looking, vec3(0,0,0)), 5.0f;
 		}
 
 		if(glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS){
