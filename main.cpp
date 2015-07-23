@@ -5,6 +5,17 @@
 
 GLFWwindow* window = NULL;
 
+
+vec3 LinearInterpolate(vec3 p1, vec3 p2, float scalar = 0.001f) {
+	//p3 = p1 + scalar * (p2 - p1)
+	vec3 p3;
+	p3.x = p1.x + scalar * (p2.x - p1.x);
+	p3.y = p1.y + scalar * (p2.y - p1.y);
+	p3.z = p1.z + scalar * (p2.z - p1.z);
+
+	return p3;
+}
+
 void window_refresh_callback(GLFWwindow* window){
 	//world.Render(camera);
 	glfwSwapBuffers(window);
@@ -173,7 +184,7 @@ int main(){
 	#endif
 
 	// Camera matrix info
-	camera.position = vec3(4,0,3); // Camera is at (4,3,3), in World Space
+	camera.position = vec3(4,0,0); // Camera is at (4,3,3), in World Space
 	camera.looking = vec3(0,0,0); // and looks at the origin
 	camera.headsUp  = vec3(0,1,0);  // Head is up (set to 0,-1,0 to look upside-down)
 	do{
@@ -188,6 +199,68 @@ int main(){
 			camera.looking, 
 			camera.headsUp  
 		);
+
+
+
+		// CAMERA INSTRUCTIONS
+		// Up, Down, Left and Right Arrows control where the camera looks
+		// "W" will lineally interpolate between the camera's current position and its starting position
+		// i.e., "W" will return you to the starting position
+		// "Spacebar" and "X" control vertical movement
+		// "A" and "D" control control horizontal movement
+		// "S" Let's you pull the camera back, essentially zooming out.
+		// The camera more or less behaves like it's on a rail, only going horizontally and vertically.
+
+		float highSpeed = 3.0f;
+		float lowSpeed = 3.0f;
+
+		if(glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS){
+			camera.looking.y += highSpeed * deltaTime;
+		}
+
+		if(glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS){
+			camera.looking.y -= highSpeed * deltaTime;
+		}
+
+		if(glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS){
+			camera.looking.z += highSpeed * deltaTime;
+		}
+
+		if(glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS){
+			camera.looking.z -= highSpeed * deltaTime;
+		}
+
+		////////////
+
+		if(glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS){
+			//camera.position.x -= 0.001f;
+			camera.position = LinearInterpolate(camera.position, vec3(4,0,0), 0.04f);
+			camera.looking = LinearInterpolate(camera.looking, vec3(0,0,0)), 1.0f;
+		}
+
+		if(glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS){
+			camera.position.x += highSpeed * deltaTime;
+		}
+
+		if(glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS){
+			camera.position.z += highSpeed * deltaTime;
+			camera.looking.z += lowSpeed * deltaTime;
+		}
+
+		if(glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS){
+			camera.position.z -= highSpeed * deltaTime;
+			camera.looking.z -= lowSpeed * deltaTime;
+		}
+
+		if(glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS){
+			camera.position.y += highSpeed * deltaTime;
+			camera.looking.y += lowSpeed * deltaTime;
+		}
+
+		if(glfwGetKey(window, GLFW_KEY_X) == GLFW_PRESS){
+			camera.position.y -= highSpeed * deltaTime;
+			camera.looking.y -= lowSpeed * deltaTime;
+		}
 
 		world.Update(deltaTime);
 		world.Render(camera);

@@ -14,7 +14,7 @@ class Object{
 		void SetPosition(vec3 position);
 		void SetScale(vec3 scale);
 
-		vec3 GetPosition();
+		vec3 GetPosition(), position;
 		float GetLeftX();
 		float GetRightX();
 		float GetTopY();
@@ -29,7 +29,7 @@ class Object{
 		void BuildTriangleStrip(const GLuint& perRow, const GLuint& perColumn);
 		float rotAngle, rotSpeed;
 		Object* objectState;
-		vec3 position, scale;
+		vec3 scale;
 		GLuint numUVs, numIndices, renderMode, vertexBufferID;
 
 	private:

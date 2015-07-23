@@ -143,6 +143,19 @@ void World::Update(const float& deltaTime){
 
 	//plane->Update(deltaTime);
 	cube->Update(deltaTime);
+	
+	if(glfwGetKey(window, GLFW_KEY_LEFT)){
+			//
+			//cube->position.x -= 0.001f;
+			//cube->position.z += 0.001f;
+		}
+
+		if(glfwGetKey(window, GLFW_KEY_RIGHT)){
+			//
+			//cube->position.x += 0.001f;
+			//cube->position.z -= 0.001f;
+		}
+	
 }
 
 void World::Render(const Camera& camera){
