@@ -31,7 +31,8 @@ class World{
 	private:
 		Plane* plane;
 		Cube* cube;
-		Mesh* mesh;
+		Mesh* mesh; 
+		Mesh* mesh1;
 		u8* levelBuffer;
 		u8* textureBuffer;
 		u8 numTextures, levelWidth, levelHeight;

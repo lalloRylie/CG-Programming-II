@@ -1,6 +1,8 @@
 #include "World.h"
 #include "ModelLoading.h"
 
+GLuint texture1 = NULL;
+GLuint texture2 = NULL;
 
 //TODO: Restructure the project
 namespace{
@@ -36,104 +38,114 @@ World::World(){
 	//cube = new Cube();
 
 	mesh = new Mesh();
+	mesh->BuildMesh("./Assets/Models/bunny2.obj");
+	mesh->SetPosition(vec3(0.0f));
 
+	mesh1 = new Mesh();
+	mesh1->BuildMesh("./Assets/Models/sphere_large.obj");
+	mesh1->SetPosition(vec3(0.0f));
+
+	texture1 = mesh->LoadBMP("./Assets/Textures/arceus.bmp");
+	texture2 = mesh1->LoadBMP("./Assets/Textures/dirt.bmp");
+
+	
 	//GLuint textureID = plane->LoadBMP("test.bmp");
 	//GLuint textureID = plane->LoadBMP("dirt.bmp");
 	//GLuint textureID = plane->LoadBMP("world.bmp");
 
-	//load world...
-	ifstream myfile(LEVEL_0);
+	////load world...
+	//ifstream myfile(LEVEL_0);
 
-	char buffer[::MAX_BUFFER_SIZE];
-	char path[::MAX_PATH_SIZE];
+	//char buffer[::MAX_BUFFER_SIZE];
+	//char path[::MAX_PATH_SIZE];
 
-	if (myfile.is_open())
-	{
-		string line;
-		unsigned char len = 0;
+	//if (myfile.is_open())
+	//{
+	//	string line;
+	//	unsigned char len = 0;
 
-		bool loadLevelData = true;
+	//	bool loadLevelData = true;
 
-		while(getline (myfile,line) )
-		{
-			line.copy(buffer, len = line.length());
-			buffer[len] = '\0';
+	//	while(getline (myfile,line) )
+	//	{
+	//		line.copy(buffer, len = line.length());
+	//		buffer[len] = '\0';
 
-			if(IS_EMPTY_LINE(buffer[0])){
-				continue;
-			}
-			else if(LOAD_TEXTURE(buffer[0])){
-				//Setting buffer size...
-				numTextures = buffer[1] - ASCII_ZERO;
-				textureBuffer = (u8*)malloc(MAX_PATH_SIZE * numTextures);
+	//		if(IS_EMPTY_LINE(buffer[0])){
+	//			continue;
+	//		}
+	//		else if(LOAD_TEXTURE(buffer[0])){
+	//			//Setting buffer size...
+	//			numTextures = buffer[1] - ASCII_ZERO;
+	//			textureBuffer = (u8*)malloc(MAX_PATH_SIZE * numTextures);
 
-				loadLevelData = false;
-				continue;
-			}
-			else if(LOAD_LEVELDATA(buffer[0])){
-				//Adding 1 to accomindate for comma...
-				u8 numStride = ::GetNumCharCount((u8*)&buffer[1]) + 1;
+	//			loadLevelData = false;
+	//			continue;
+	//		}
+	//		else if(LOAD_LEVELDATA(buffer[0])){
+	//			//Adding 1 to accomindate for comma...
+	//			u8 numStride = ::GetNumCharCount((u8*)&buffer[1]) + 1;
 
-				levelWidth = std::stoi(&buffer[1]);
-				levelHeight = std::stoi(&buffer[1 + numStride]);
+	//			levelWidth = std::stoi(&buffer[1]);
+	//			levelHeight = std::stoi(&buffer[1 + numStride]);
 
-				levelBuffer = (u8*)malloc(levelWidth * levelHeight);
+	//			levelBuffer = (u8*)malloc(levelWidth * levelHeight);
 
-				loadLevelData = true;
-				continue;
-			}
-			else if(loadLevelData){
-				//TODO: May need to put this elsewhere so it doesn't persist...
-				static u16 levelIndex = 0;
+	//			loadLevelData = true;
+	//			continue;
+	//		}
+	//		else if(loadLevelData){
+	//			//TODO: May need to put this elsewhere so it doesn't persist...
+	//			static u16 levelIndex = 0;
 
-				//FillBuffer((u8*)buffer, levelBuffer, levelIndex, levelWidth);
+	//			//FillBuffer((u8*)buffer, levelBuffer, levelIndex, levelWidth);
 
-				continue;
-			}
+	//			continue;
+	//		}
 
-			unsigned char commaLen = FindChar(buffer, ',');
+	//		unsigned char commaLen = FindChar(buffer, ',');
 
-			static u8 texIndex = 0;
+	//		static u8 texIndex = 0;
 
-			//numTextures = buffer[1] - ASCII_ZERO;
-			//	textureBuffer = (u8*)malloc(MAX_PATH_SIZE * numTextures);
+	//		//numTextures = buffer[1] - ASCII_ZERO;
+	//		//	textureBuffer = (u8*)malloc(MAX_PATH_SIZE * numTextures);
 
-			//Found textures...
-			if(commaLen > 0){
-				strcpy(path, buffer);
-				path[commaLen - 1] = '\0';
+	//		//Found textures...
+	//		if(commaLen > 0){
+	//			strcpy(path, buffer);
+	//			path[commaLen - 1] = '\0';
 
-				memcpy(&textureBuffer[texIndex], &path, MAX_PATH_SIZE);
-				texIndex += MAX_PATH_SIZE - 1;
-				
-				continue;
-			}
+	//			memcpy(&textureBuffer[texIndex], &path, MAX_PATH_SIZE);
+	//			texIndex += MAX_PATH_SIZE - 1;
+	//			
+	//			continue;
+	//		}
 
-			//load textures...
-			//string filePath = 
-		}
+	//		//load textures...
+	//		//string filePath = 
+	//	}
 
-		myfile.close();
-	}
+	//	myfile.close();
+	//}
 
-	else cout << "Unable to open file"; 
+	//else cout << "Unable to open file"; 
 }
 
-unsigned char World::FindChar(const char* buffer, const char& c){
-	//TODO: Search for char c, if found return true...
-	char* value = (char*)buffer;
-	unsigned char len = 0;
-
-	while(value != '\0'){
-		++len;
-		if(*value == c){
-			return len;
-		}
-		++value;
-	}
-
-	return len = 0;
-}
+//unsigned char World::FindChar(const char* buffer, const char& c){
+//	//TODO: Search for char c, if found return true...
+//	char* value = (char*)buffer;
+//	unsigned char len = 0;
+//
+//	while(value != '\0'){
+//		++len;
+//		if(*value == c){
+//			return len;
+//		}
+//		++value;
+//	}
+//
+//	return len = 0;
+//}
 
 //TODO: Add functionality later...
 World::~World(){
@@ -145,6 +157,9 @@ World::~World(){
 
 	delete mesh;
 	mesh = NULL;
+
+	delete mesh1;
+	mesh1 = NULL;
 }
 
 void World::Update(const float& deltaTime){
@@ -152,11 +167,17 @@ void World::Update(const float& deltaTime){
 	//plane->Update(deltaTime);
 	//cube->Update(deltaTime);
 	mesh->Update(deltaTime);
+	mesh1->Update(deltaTime);
 	
 }
 
 void World::Render(const Camera& camera){
 	//plane->Render(camera);
 	//cube->Render(camera);
+
+	glCullFace(GL_BACK);
 	mesh->Render(camera);
+
+	glCullFace(GL_FRONT);
+	mesh1->Render(camera);
 }

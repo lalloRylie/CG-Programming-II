@@ -262,17 +262,35 @@ mat4 Object::BeforeRender(){
 	);
 
 	//Rendering UVs...
-	glEnableVertexAttribArray(1);
-	glBindBuffer(GL_ARRAY_BUFFER, uvID);
+	if(uvID > 0){
+		glEnableVertexAttribArray(1);
+		glBindBuffer(GL_ARRAY_BUFFER, uvID);
 
-	glVertexAttribPointer(
-		1,			//attribute layout
-		2,			//Elements in array
-		GL_FLOAT,	//Each element is of type float
-		GL_FALSE,	//Normalized?
-		0,			//Stride...
-		(void*)0	//Array buffer offset...
-	);
+		glVertexAttribPointer(
+			1,			//attribute layout
+			2,			//Elements in array
+			GL_FLOAT,	//Each element is of type float
+			GL_FALSE,	//Normalized?
+			0,			//Stride...
+			(void*)0	//Array buffer offset...
+		);
+	}
+
+	if(normID > 0){
+		//Setting up normals...
+		glEnableVertexAttribArray(2);
+		glBindBuffer(GL_ARRAY_BUFFER, normID);
+
+		glVertexAttribPointer(
+			2,			//attribute layout
+			3,			//Elements in array
+			GL_FLOAT,	//Each element is of type float
+			GL_FALSE,	//Normalized?
+			0,			//Stride...
+			(void*)0	//Array buffer offset...
+		);
+	}
+	
 
 	//glDrawArrays(renderMode, 0, numIndices);	//GL_TRIANGLE_STRIP or GL_TRIANGLES
 

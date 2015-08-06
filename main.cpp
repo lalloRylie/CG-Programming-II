@@ -169,7 +169,7 @@ int main(){
 	glBindVertexArray(vertexArrayID);
 
 	//Create and compile glsl program from shaders...
-	GLuint programID = LoadShaders("BasicVertexShader.vertexshader", "BasicFragmentShader.fragmentshader");
+	GLuint programID = LoadShaders("TexturedVertexShader.vertexshader", "TexturedFragmentShader.fragmentshader");
 	glUseProgram(programID);
 
 	Camera camera;
@@ -179,7 +179,7 @@ int main(){
 
 	World world;
 
-	#if 1
+	#if 0
 		glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
 	#endif
 
@@ -187,6 +187,10 @@ int main(){
 	camera.position = vec3(4,0,0); // Camera is at (4,3,3), in World Space
 	camera.looking = vec3(0,0,0); // and looks at the origin
 	camera.headsUp  = vec3(0,1,0);  // Head is up (set to 0,-1,0 to look upside-down)
+
+	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_CULL_FACE);
+	glCullFace(GL_BACK);
 	do{
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 

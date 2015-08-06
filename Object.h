@@ -22,7 +22,7 @@ class Object{
 
 		void SaveObjectState(char *message = "Saved Object State");
 		void LoadObjectState(char *message = "Loaded Object State");
-		GLuint LoadBMP(const char * imagepath);
+		GLuint LoadBMP(const char * imagepath), textureID;
 
 	protected:
 		void BuildTriangles(const GLuint& perRow, const GLuint& perColumn);
@@ -30,11 +30,10 @@ class Object{
 		float rotAngle, rotSpeed;
 		Object* objectState;
 		vec3 scale;
-		GLuint numUVs, numIndices, renderMode, vertexBufferID;
+		GLuint numUVs, numIndices, renderMode, vertexBufferID, uvID, normID;
 
 	private:
 		void LoadTriangles(GLfloat *vertices, GLfloat *uvs);
 		float leftX, rightX, topY, bottomY;
 		mat4 BeforeRender();
-		GLuint textureID, uvID;
 };
