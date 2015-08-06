@@ -1,6 +1,8 @@
 #include "World.h"
 #include "ModelLoading.h"
 
+
+//TODO: Restructure the project
 namespace{
 	const u8 MAX_BUFFER_SIZE = 64;
 	const u8 MAX_PATH_SIZE = 32;

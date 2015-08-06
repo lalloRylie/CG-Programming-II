@@ -53,10 +53,15 @@ void Object::Update(const float& deltaTime){
 }
 
 void Object::Render(const Camera& camera){
-	mat4 modelMatrix = Render();
+	mat4 modelMatrix = BeforeRender();
 	mat4 MVPMatrix = camera.projectionMatrix * camera.viewMatrix * modelMatrix;
 
 	glUniformMatrix4fv(camera.MVPMatrixID, 1, GL_FALSE, &MVPMatrix[0][0]);
+
+	glDrawArrays(renderMode, 0, numIndices);	//GL_TRIANGLE_STRIP or GL_TRIANGLES
+
+	glDisableVertexAttribArray(0);
+	glDisableVertexAttribArray(1);
 }
 
 void Object::BuildTriangles(const GLuint& perRow, const GLuint& perColumn){
@@ -243,7 +248,7 @@ GLuint Object::LoadBMP(const char * imagepath){
 	return textureID;
 }
 
-mat4 Object::Render(){
+mat4 Object::BeforeRender(){
 	glEnableVertexAttribArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBufferID);
 
@@ -269,10 +274,10 @@ mat4 Object::Render(){
 		(void*)0	//Array buffer offset...
 	);
 
-	glDrawArrays(renderMode, 0, numIndices);	//GL_TRIANGLE_STRIP or GL_TRIANGLES
+	//glDrawArrays(renderMode, 0, numIndices);	//GL_TRIANGLE_STRIP or GL_TRIANGLES
 
-	glDisableVertexAttribArray(0);
-	glDisableVertexAttribArray(1);
+	//glDisableVertexAttribArray(0);
+	//glDisableVertexAttribArray(1);
 
 	//Every object starts off with an identity matrix...
 	/*mat4 objectMatrix = mat4(1.0f);
