@@ -38,15 +38,11 @@ World::World(){
 	//cube = new Cube();
 
 	mesh = new Mesh();
-	mesh->BuildMesh("./Assets/Models/bunny2.obj");
+	mesh->BuildMesh("./Assets/Models/dense_plane.obj");
 	mesh->SetPosition(vec3(0.0f));
 
-	mesh1 = new Mesh();
-	mesh1->BuildMesh("./Assets/Models/sphere_large.obj");
-	mesh1->SetPosition(vec3(0.0f));
+	texture1 = mesh->LoadBMP("./Assets/Textures/water.bmp");
 
-	texture1 = mesh->LoadBMP("./Assets/Textures/arceus.bmp");
-	texture2 = mesh1->LoadBMP("./Assets/Textures/dirt.bmp");
 
 	
 	//GLuint textureID = plane->LoadBMP("test.bmp");
@@ -157,9 +153,6 @@ World::~World(){
 
 	delete mesh;
 	mesh = NULL;
-
-	delete mesh1;
-	mesh1 = NULL;
 }
 
 void World::Update(const float& deltaTime){
@@ -167,17 +160,11 @@ void World::Update(const float& deltaTime){
 	//plane->Update(deltaTime);
 	//cube->Update(deltaTime);
 	mesh->Update(deltaTime);
-	mesh1->Update(deltaTime);
-	
 }
 
 void World::Render(const Camera& camera){
 	//plane->Render(camera);
 	//cube->Render(camera);
 
-	glCullFace(GL_BACK);
 	mesh->Render(camera);
-
-	glCullFace(GL_FRONT);
-	mesh1->Render(camera);
 }

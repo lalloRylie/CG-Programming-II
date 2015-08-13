@@ -1,0 +1,21 @@
+#version 330 core
+ 
+layout(location = 0) in vec3 vertexPosition_modelspace;
+layout(location = 1) in vec2 vertexUV;
+ 
+// Output data ; will be interpolated for each fragment.
+out vec2 UV;
+ 
+// Values that stay constant for the whole mesh.
+uniform mat4 MVP;
+ 
+void main(){
+ 
+    vec4 vertices = vec4(vertexPosition_modelspace, 1);
+	vertices.z = 0.0;
+
+    gl_Position =  MVP * vertices;
+ 
+    // UV of the vertex. No special space for this one.
+    UV = vertexUV;
+}

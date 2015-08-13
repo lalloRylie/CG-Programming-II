@@ -125,8 +125,13 @@
   <ItemGroup>
     <None Include="BasicFragmentShader.fragmentshader" />
     <None Include="BasicVertexShader.vertexshader" />
+    <None Include="FlattenShader.vertexshader" />
     <None Include="TexturedFragmentShader.fragmentshader" />
     <None Include="TexturedVertexShader.vertexshader" />
+    <None Include="ToonShader.fragmentshader" />
+    <None Include="ToonShader.vertexshader" />
+    <None Include="WaterShader.fragmentshader" />
+    <None Include="WaterShader.vertexshader" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

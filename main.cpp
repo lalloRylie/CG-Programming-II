@@ -169,13 +169,15 @@ int main(){
 	glBindVertexArray(vertexArrayID);
 
 	//Create and compile glsl program from shaders...
-	GLuint programID = LoadShaders("TexturedVertexShader.vertexshader", "TexturedFragmentShader.fragmentshader");
+	GLuint programID = LoadShaders("WaterShader.vertexshader", "WaterShader.fragmentshader");
 	glUseProgram(programID);
 
 	Camera camera;
 	float aspectRatio = SCREEN_WIDTH/(float)SCREEN_HEIGHT;
 	camera.MVPMatrixID = glGetUniformLocation(programID, "MVP");
 	camera.projectionMatrix = perspective(FIELD_OF_VIEW, aspectRatio, Z_NEAR, Z_FAR);
+
+	GLint timeLoc = glGetUniformLocationARB(programID, "time");
 
 	World world;
 
@@ -196,6 +198,10 @@ int main(){
 
 		//Getting delta time...
 		float deltaTime = (float)getDeltaTime();
+		static float time = 0.0;
+		
+		glUniform1fARB(timeLoc, time);
+		time += 0.5 * deltaTime;
 
 		// Camera matrix
 		camera.viewMatrix = lookAt(

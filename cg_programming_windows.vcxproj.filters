@@ -85,5 +85,14 @@
     <None Include="TexturedVertexShader.vertexshader">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="FlattenShader.vertexshader" />
+    <None Include="ToonShader.fragmentshader" />
+    <None Include="ToonShader.vertexshader" />
+    <None Include="WaterShader.vertexshader">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="WaterShader.fragmentshader">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>
