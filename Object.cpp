@@ -24,6 +24,10 @@ void Object::SetScale(vec3 scale){
 	this->scale = scale;
 }
 
+void Object::SetRotation(float rotSpeed){
+	this->rotSpeed = rotSpeed;
+}
+
 vec3 Object::GetPosition(){
 	return position;
 }
@@ -57,6 +61,8 @@ void Object::Render(const Camera& camera){
 	mat4 MVPMatrix = camera.projectionMatrix * camera.viewMatrix * modelMatrix;
 
 	glUniformMatrix4fv(camera.MVPMatrixID, 1, GL_FALSE, &MVPMatrix[0][0]);
+	glUniformMatrix4fv(camera.M_matrixID, 1, GL_FALSE, &modelMatrix[0][0]);
+	glUniform3f(camera.cameraForwardID, camera.looking.x, camera.looking.y, camera.looking.z);
 
 	glDrawArrays(renderMode, 0, numIndices);	//GL_TRIANGLE_STRIP or GL_TRIANGLES
 

@@ -159,6 +159,7 @@ double getDeltaTime(){
 	return deltaTime;
 }
 
+
 int main(){
 	if(InitWindowFailed() | InitGlewFailed()){
 		return EXIT_WITH_ERROR;
@@ -169,12 +170,15 @@ int main(){
 	glBindVertexArray(vertexArrayID);
 
 	//Create and compile glsl program from shaders...
-	GLuint programID = LoadShaders("WaterShader.vertexshader", "WaterShader.fragmentshader");
+	GLuint programID = LoadShaders("ToonShader.vertexshader", "ToonShader.fragmentshader");
 	glUseProgram(programID);
 
 	Camera camera;
 	float aspectRatio = SCREEN_WIDTH/(float)SCREEN_HEIGHT;
 	camera.MVPMatrixID = glGetUniformLocation(programID, "MVP");
+	camera.M_matrixID = glGetUniformLocation(programID, "M_matrix");
+	camera.cameraForwardID = glGetUniformLocation(programID, "cameraForward");
+
 	camera.projectionMatrix = perspective(FIELD_OF_VIEW, aspectRatio, Z_NEAR, Z_FAR);
 
 	GLint timeLoc = glGetUniformLocationARB(programID, "time");
@@ -189,10 +193,17 @@ int main(){
 	camera.position = vec3(4,0,0); // Camera is at (4,3,3), in World Space
 	camera.looking = vec3(0,0,0); // and looks at the origin
 	camera.headsUp  = vec3(0,1,0);  // Head is up (set to 0,-1,0 to look upside-down)
+	camera.horizontalAngle = 3.14f;
+	camera.verticalAngle = 0.0f;
+	camera.intitialFoV = 45.0f;
+	camera.speed = 5.0f;
+	camera.mouseSpeed = 0.07f;
+
 
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
 	glCullFace(GL_BACK);
+	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
 	do{
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -202,6 +213,17 @@ int main(){
 		
 		glUniform1fARB(timeLoc, time);
 		time += 0.5 * deltaTime;
+	
+		glfwGetCursorPos(window, &camera.xpos, &camera.ypos);
+		glfwSetCursorPos(window, SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
+
+		camera.horizontalAngle += camera.mouseSpeed * deltaTime * float(SCREEN_WIDTH/2 - camera.xpos);
+		camera.verticalAngle += camera.mouseSpeed * deltaTime * float(SCREEN_HEIGHT/2 - camera.ypos);
+
+		vec3 direction = vec3(cos(camera.verticalAngle) * sin(camera.horizontalAngle), sin(camera.verticalAngle), cos(camera.verticalAngle) * cos(camera.horizontalAngle));
+		vec3 right = vec3(sin(camera.horizontalAngle - 3.14f/2.0f), 0, cos(camera.horizontalAngle - 3.14f/2.0f));
+		camera.headsUp = cross(right, direction);
+		camera.looking = camera.position + direction;
 
 		// Camera matrix
 		camera.viewMatrix = lookAt(
@@ -210,66 +232,28 @@ int main(){
 			camera.headsUp  
 		);
 
-
-
-		// CAMERA INSTRUCTIONS
-		// Up, Down, Left and Right Arrows control where the camera looks
-		// "W" will lineally interpolate between the camera's current position and its starting position
-		// i.e., "W" will return you to the starting position
-		// "Spacebar" and "X" control vertical movement
-		// "A" and "D" control control horizontal movement
-		// "S" Let's you pull the camera back, essentially zooming out.
-		// The camera more or less behaves like it's on a rail, only going horizontally and vertically.
-
-		float highSpeed = 3.0f;
-		float lowSpeed = 3.0f;
-
-		if(glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS){
-			camera.looking.y += highSpeed * deltaTime;
-		}
-
-		if(glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS){
-			camera.looking.y -= highSpeed * deltaTime;
-		}
-
-		if(glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS){
-			camera.looking.z += highSpeed * deltaTime;
-		}
-
-		if(glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS){
-			camera.looking.z -= highSpeed * deltaTime;
-		}
-
-		////////////
-
 		if(glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS){
-			//camera.position.x -= 0.001f;
-			camera.position = LinearInterpolate(camera.position, vec3(4,0,0), 0.04f);
-			camera.looking = LinearInterpolate(camera.looking, vec3(0,0,0)), 5.0f;
+			camera.position += direction * deltaTime * camera.speed;
 		}
 
 		if(glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS){
-			camera.position.x += highSpeed * deltaTime;
+			camera.position -= direction * deltaTime * camera.speed;
 		}
 
 		if(glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS){
-			camera.position.z += highSpeed * deltaTime;
-			camera.looking.z += lowSpeed * deltaTime;
+			camera.position -= right * deltaTime * camera.speed;
 		}
 
 		if(glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS){
-			camera.position.z -= highSpeed * deltaTime;
-			camera.looking.z -= lowSpeed * deltaTime;
+			camera.position += right * deltaTime * camera.speed;
 		}
 
 		if(glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS){
-			camera.position.y += highSpeed * deltaTime;
-			camera.looking.y += lowSpeed * deltaTime;
+			camera.position += camera.headsUp * deltaTime * camera.speed;
 		}
 
 		if(glfwGetKey(window, GLFW_KEY_X) == GLFW_PRESS){
-			camera.position.y -= highSpeed * deltaTime;
-			camera.looking.y -= lowSpeed * deltaTime;
+			camera.position -= camera.headsUp * deltaTime * camera.speed;
 		}
 
 		world.Update(deltaTime);

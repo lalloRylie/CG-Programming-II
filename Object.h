@@ -13,6 +13,7 @@ class Object{
 
 		void SetPosition(vec3 position);
 		void SetScale(vec3 scale);
+		void SetRotation(float rotSpeed);
 
 		vec3 GetPosition(), position;
 		float GetLeftX();

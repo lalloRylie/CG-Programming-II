@@ -38,10 +38,12 @@ World::World(){
 	//cube = new Cube();
 
 	mesh = new Mesh();
-	mesh->BuildMesh("./Assets/Models/dense_plane.obj");
+	mesh->BuildMesh("./Assets/Models/bunny.obj");
 	mesh->SetPosition(vec3(0.0f));
+	mesh->SetRotation(1.2f);
+	mesh->SetScale(vec3(2.0f));
 
-	texture1 = mesh->LoadBMP("./Assets/Textures/water.bmp");
+	texture1 = mesh->LoadBMP("./Assets/Textures/arceus.bmp");
 
 
 	
