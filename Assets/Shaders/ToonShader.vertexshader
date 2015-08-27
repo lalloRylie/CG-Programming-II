@@ -16,13 +16,13 @@ uniform mat4 MVP;
 uniform mat4 M_matrix;
  
 void main(){
-	
 	vec3 lightDir = normalize(vec3(0.0, 0.0, 1.0));
 	lightDirection = lightDir;
+	mat4 normalMatrix = transpose(inverse(M_matrix));
 
     // UV of the vertex. No special space for this one.
     UV = vertexUV;
-	normals = normalize(M_matrix * vec4(vertexNormal, 0.0)).xyz;
+	normals = normalize(normalMatrix * vec4(vertexNormal, 0.0)).xyz;
 	intensity = dot(lightDir, normals);
 
 	// Output position of the vertex, in clip space : MVP * position

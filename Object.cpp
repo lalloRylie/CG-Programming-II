@@ -62,7 +62,7 @@ void Object::Render(const Camera& camera){
 
 	glUniformMatrix4fv(camera.MVPMatrixID, 1, GL_FALSE, &MVPMatrix[0][0]);
 	glUniformMatrix4fv(camera.M_matrixID, 1, GL_FALSE, &modelMatrix[0][0]);
-	glUniform3f(camera.cameraForwardID, camera.looking.x, camera.looking.y, camera.looking.z);
+	glUniform3f(camera.cameraForwardID, camera.forward.x, camera.forward.y, camera.forward.z);
 
 	glDrawArrays(renderMode, 0, numIndices);	//GL_TRIANGLE_STRIP or GL_TRIANGLES
 

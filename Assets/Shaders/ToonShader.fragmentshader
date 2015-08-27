@@ -18,14 +18,13 @@ void main(){
 	vec4 _color = vec4(0,0,0,1);
 	vec3 reflectionVector = normalize(lightDirection - (2.0f * normals * dot(lightDirection, normals)));
 	
-	float specIntensity = pow( clamp( dot(reflectionVector, normalize(cameraForward)), 0.0f, 1.0f), 20.0f) * new_intensity;
+	float specIntensity = pow( clamp( dot(reflectionVector, normalize(cameraForward)), 0.0f, 1.0f), 25.0f) * new_intensity;
 
-	_color = texture( myTextureSampler, UV );
-	//_color = vec4(1.0f, 0.5f, 0.5f, 1.0f);
-	//new_intensity *= 3.0f;
-	//new_intensity = ceil(new_intensity) / 3.0f;
+	_color = vec4(0.75f, 0.33f, 1.0f, 1.0f);
+	new_intensity *= 3.0f;
+	new_intensity = ceil(new_intensity) / 3.0f;
 
-	//_color *= new_intensity;
+	_color *= new_intensity;
 	_color = _color * (1.0f - specIntensity) + specIntensity * vec4(1.0f, 1.0f, 1.0f, 1.0f);
 
 	_color.a = 1.0f;

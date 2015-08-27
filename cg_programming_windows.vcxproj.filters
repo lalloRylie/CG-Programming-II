@@ -73,26 +73,28 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="BasicFragmentShader.fragmentshader">
+    <None Include="Assets\Shaders\BasicVertexShader.vertexshader">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="BasicVertexShader.vertexshader">
+    <None Include="Assets\Shaders\BasicFragmentShader.fragmentshader">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="TexturedFragmentShader.fragmentshader">
+    <None Include="Assets\Shaders\FlattenShader.vertexshader" />
+    <None Include="Assets\Shaders\WaterShader.vertexshader">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="TexturedVertexShader.vertexshader">
+    <None Include="Assets\Shaders\WaterShader.fragmentshader">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="FlattenShader.vertexshader" />
-    <None Include="ToonShader.fragmentshader" />
-    <None Include="ToonShader.vertexshader" />
-    <None Include="WaterShader.vertexshader">
+    <None Include="Assets\Shaders\ToonShader.vertexshader" />
+    <None Include="Assets\Shaders\ToonShader.fragmentshader" />
+    <None Include="Assets\Shaders\TexturedVertexShader.vertexshader">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="WaterShader.fragmentshader">
+    <None Include="Assets\Shaders\TexturedFragmentShader.fragmentshader">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="Assets\Shaders\TexturedSpec.fragmentshader" />
+    <None Include="Assets\Shaders\TexturedSpec.vertexshader" />
   </ItemGroup>
 </Project>

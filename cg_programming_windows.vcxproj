@@ -123,15 +123,17 @@
     <ClInclude Include="World.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="BasicFragmentShader.fragmentshader" />
-    <None Include="BasicVertexShader.vertexshader" />
-    <None Include="FlattenShader.vertexshader" />
-    <None Include="TexturedFragmentShader.fragmentshader" />
-    <None Include="TexturedVertexShader.vertexshader" />
-    <None Include="ToonShader.fragmentshader" />
-    <None Include="ToonShader.vertexshader" />
-    <None Include="WaterShader.fragmentshader" />
-    <None Include="WaterShader.vertexshader" />
+    <None Include="Assets\Shaders\BasicFragmentShader.fragmentshader" />
+    <None Include="Assets\Shaders\BasicVertexShader.vertexshader" />
+    <None Include="Assets\Shaders\FlattenShader.vertexshader" />
+    <None Include="Assets\Shaders\TexturedFragmentShader.fragmentshader" />
+    <None Include="Assets\Shaders\TexturedSpec.fragmentshader" />
+    <None Include="Assets\Shaders\TexturedSpec.vertexshader" />
+    <None Include="Assets\Shaders\TexturedVertexShader.vertexshader" />
+    <None Include="Assets\Shaders\ToonShader.fragmentshader" />
+    <None Include="Assets\Shaders\ToonShader.vertexshader" />
+    <None Include="Assets\Shaders\WaterShader.fragmentshader" />
+    <None Include="Assets\Shaders\WaterShader.vertexshader" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

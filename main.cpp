@@ -170,7 +170,7 @@ int main(){
 	glBindVertexArray(vertexArrayID);
 
 	//Create and compile glsl program from shaders...
-	GLuint programID = LoadShaders("ToonShader.vertexshader", "ToonShader.fragmentshader");
+	GLuint programID = LoadShaders("./Assets/Shaders/TexturedSpec.vertexshader", "./Assets/Shaders/TexturedSpec.fragmentshader");
 	glUseProgram(programID);
 
 	Camera camera;
@@ -190,8 +190,7 @@ int main(){
 	#endif
 
 	// Camera matrix info
-	camera.position = vec3(4,0,0); // Camera is at (4,3,3), in World Space
-	camera.looking = vec3(0,0,0); // and looks at the origin
+	camera.position = vec3(0,1,8); // Camera is at (4,3,3), in World Space
 	camera.headsUp  = vec3(0,1,0);  // Head is up (set to 0,-1,0 to look upside-down)
 	camera.horizontalAngle = 3.14f;
 	camera.verticalAngle = 0.0f;
@@ -220,24 +219,23 @@ int main(){
 		camera.horizontalAngle += camera.mouseSpeed * deltaTime * float(SCREEN_WIDTH/2 - camera.xpos);
 		camera.verticalAngle += camera.mouseSpeed * deltaTime * float(SCREEN_HEIGHT/2 - camera.ypos);
 
-		vec3 direction = vec3(cos(camera.verticalAngle) * sin(camera.horizontalAngle), sin(camera.verticalAngle), cos(camera.verticalAngle) * cos(camera.horizontalAngle));
+		camera.forward = vec3(cos(camera.verticalAngle) * sin(camera.horizontalAngle), sin(camera.verticalAngle), cos(camera.verticalAngle) * cos(camera.horizontalAngle));
 		vec3 right = vec3(sin(camera.horizontalAngle - 3.14f/2.0f), 0, cos(camera.horizontalAngle - 3.14f/2.0f));
-		camera.headsUp = cross(right, direction);
-		camera.looking = camera.position + direction;
+		camera.headsUp = cross(right, camera.forward);
 
 		// Camera matrix
 		camera.viewMatrix = lookAt(
 			camera.position,
-			camera.looking, 
+			camera.position + camera.forward, 
 			camera.headsUp  
 		);
 
 		if(glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS){
-			camera.position += direction * deltaTime * camera.speed;
+			camera.position += camera.forward * deltaTime * camera.speed;
 		}
 
 		if(glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS){
-			camera.position -= direction * deltaTime * camera.speed;
+			camera.position -= camera.forward * deltaTime * camera.speed;
 		}
 
 		if(glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS){
