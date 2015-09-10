@@ -44,7 +44,7 @@ using namespace std; //If we want to print stuff
 extern GLFWwindow* window;
 
 struct Camera{
-	GLuint MVPMatrixID, M_matrixID, cameraForwardID;
+	GLuint M_matrixID, V_matrixID, P_matrixID, inv_V_matrixID, cameraForwardID;
 	mat4 projectionMatrix, viewMatrix, MVPMatrix;
 	vec3 position, forward, headsUp;
 	float horizontalAngle, verticalAngle, intitialFoV;

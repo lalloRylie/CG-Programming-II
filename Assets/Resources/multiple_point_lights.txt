@@ -1,0 +1,4 @@
+https://en.wikibooks.org/wiki/GLSL_Programming/GLUT/Multiple_Lights
+https://en.wikibooks.org/wiki/GLSL_Programming/GLUT/Smooth_Specular_Highlights
+https://developer.valvesoftware.com/wiki/Constant-Linear-Quadratic_Falloff
+http://www.learnopengl.com/#!Lighting/Multiple-lights

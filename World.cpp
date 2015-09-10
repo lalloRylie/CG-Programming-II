@@ -41,7 +41,7 @@ World::World(){
 	mesh->BuildMesh("./Assets/Models/arceus.obj");
 	mesh->SetPosition(vec3(0.0f));
 	mesh->SetRotation(1.2f);
-	mesh->SetScale(vec3(2.0f));
+	mesh->SetScale(vec3(1.0f));
 
 	texture1 = mesh->LoadBMP("./Assets/Textures/arceus.bmp");
 	

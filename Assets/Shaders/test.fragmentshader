@@ -1,0 +1,121 @@
+#version 330 core
+ 
+in vec2 UV;
+in vec3 position;
+in vec3 varyingNormalDirection;
+
+uniform mat4 M_matrix;
+uniform mat4 V_matrix;
+uniform mat4 P_matrix;
+uniform mat4 inv_V_matrix;
+uniform sampler2D myTextureSampler;
+
+out vec4 color;
+
+struct lightSource {
+	vec4 position;
+	vec4 diffuse;
+	vec4 specular;
+	float constantAttenuation, linearAttenuation, quadraticAttenuation;
+	float spotCutoff, spotExponent;
+	vec3 spotDirection;
+};
+
+const int numberOfLights = 3;
+lightSource lights[numberOfLights];
+
+lightSource light0 = lightSource(
+	vec4(20.0f, 0.0f, 0.0f, 1.0f),
+	vec4(5.0f, 0.0f, 0.0f, 1.0f),
+	vec4(1.0f, 1.0f, 1.0f, 1.0f),
+	0.0f, 1.0f, 0.0f,
+	180.0f, 0.0f,
+	vec3(0.0f, 0.0f, 0.0f)
+);
+
+lightSource light1 = lightSource(
+	vec4(-20.0f, 0.0f, 0.0f, 1.0f),
+	vec4(0.0f, 5.0f, 0.0f, 1.0f),
+	vec4(1.0f, 1.0f, 1.0f, 1.0f),
+	0.0f, 1.0f, 0.0f,
+	180.0f, 0.0f,
+	vec3(0.0f, 0.0f, 0.0f)
+);
+
+lightSource light2 = lightSource(
+	vec4(0.0f, 20.0f, 0.0f, 1.0f),
+	vec4(0.0f, 0.0f, 5.0f, 1.0f),
+	vec4(1.0f, 1.0f, 1.0f, 1.0f),
+	0.0f, 1.0f, 0.0f,
+	180.0f, 0.0f,
+	vec3(0.0f, 0.0f, 0.0f)
+);
+
+vec4 scene_ambient = vec4(0.2f, 0.2f, 0.2f, 1.0f);
+
+struct material {
+	vec4 ambient;
+	vec4 diffuse;
+	vec4 specular;
+	float shininess;
+};
+
+material frontMaterial = material(
+	vec4(0.2f, 0.2f, 0.2f, 1.0f),
+	vec4(1.0f, 0.8f, 0.8f, 1.0f),
+	vec4(1.0f, 1.0f, 1.0f, 1.0f),
+	5.0f
+);
+
+void main() {
+	lights[0] = light0;
+	lights[1] = light1;
+	lights[2] = light2;
+
+	vec3 normalDirection = normalize(varyingNormalDirection);
+	vec3 viewDirection = normalize(inv_V_matrix * vec4(0.0f, 0.0f, 0.0f, 1.0f) - vec4(position, 0.0f)).xyz;
+	vec3 lightDirection;
+	float attenuation;
+
+	vec3 totalLighting = vec3(scene_ambient) * vec3(frontMaterial.ambient);
+
+	for(int i = 0; i < numberOfLights; i++) {
+		if(lights[i].position.w == 0.0f) { //directional light
+			attenuation = 1.0f; //no attenuation
+			lightDirection = normalize(lights[i].position).xyz;
+		} else { // another kind of light
+			vec3 positionToLightSource = vec3(lights[i].position.xyz - position);
+			float distance = length(positionToLightSource);
+			lightDirection = normalize(positionToLightSource);
+			attenuation = 1.0f / (lights[i].constantAttenuation
+								  + lights[i].linearAttenuation * distance
+								  + lights[i].quadraticAttenuation * (distance * distance));
+
+			if(lights[i].spotCutoff <= 90.0f) { //spotlight
+				float clampedCosine = max(0.0, dot(-lightDirection, lights[i].spotDirection));
+				if(clampedCosine < cos(radians(lights[i].spotCutoff))) { //outside of spotlight cone
+					attenuation = 0.0f;
+				} else {
+					attenuation = attenuation * pow(clampedCosine, lights[i].spotExponent);
+				}
+			}
+		}
+
+		vec3 ambientLighting = vec3(scene_ambient) * vec3(frontMaterial.ambient);
+
+		vec3 diffuseReflection = attenuation * vec3(lights[i].diffuse)
+								 * vec3(frontMaterial.diffuse)
+								 * max(0.0f, dot(normalDirection, lightDirection));
+
+		vec3 specularReflection;
+		if(dot(normalDirection, lightDirection) < 0.0f) { //light source on wrong side
+			specularReflection = vec3(0.0f, 0.0f, 0.0f); //no specular reflection
+		} else {
+			specularReflection = attenuation * vec3(lights[i].specular) * vec3(frontMaterial.specular)
+								 * pow(max(0.0f, dot(reflect(-lightDirection, normalDirection), viewDirection)), frontMaterial.shininess);
+		}
+		totalLighting = totalLighting + diffuseReflection + specularReflection;
+	}
+
+	color = vec4(totalLighting, 1.0f);
+}

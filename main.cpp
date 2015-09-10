@@ -170,13 +170,16 @@ int main(){
 	glBindVertexArray(vertexArrayID);
 
 	//Create and compile glsl program from shaders...
-	GLuint programID = LoadShaders("./Assets/Shaders/TexturedSpec.vertexshader", "./Assets/Shaders/TexturedSpec.fragmentshader");
+	GLuint programID = LoadShaders("./Assets/Shaders/test.vertexshader", "./Assets/Shaders/test.fragmentshader");
 	glUseProgram(programID);
 
 	Camera camera;
 	float aspectRatio = SCREEN_WIDTH/(float)SCREEN_HEIGHT;
-	camera.MVPMatrixID = glGetUniformLocation(programID, "MVP");
-	camera.M_matrixID = glGetUniformLocation(programID, "M_matrix");
+
+	camera.M_matrixID      = glGetUniformLocation(programID, "M_matrix");
+	camera.V_matrixID      = glGetUniformLocation(programID, "V_matrix");
+	camera.inv_V_matrixID  = glGetUniformLocation(programID, "inv_V_matrix");
+	camera.P_matrixID      = glGetUniformLocation(programID, "P_matrix");
 	camera.cameraForwardID = glGetUniformLocation(programID, "cameraForward");
 
 	camera.projectionMatrix = perspective(FIELD_OF_VIEW, aspectRatio, Z_NEAR, Z_FAR);

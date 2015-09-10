@@ -57,11 +57,15 @@ void Object::Update(const float& deltaTime){
 }
 
 void Object::Render(const Camera& camera){
-	mat4 modelMatrix = BeforeRender();
-	mat4 MVPMatrix = camera.projectionMatrix * camera.viewMatrix * modelMatrix;
+	mat4 modelMatrix      = BeforeRender();
+	mat4 viewMatrix       = camera.viewMatrix;
+	mat4 invViewMatrix    = inverse(camera.viewMatrix);
+	mat4 projectionMatrix = camera.projectionMatrix;
 
-	glUniformMatrix4fv(camera.MVPMatrixID, 1, GL_FALSE, &MVPMatrix[0][0]);
 	glUniformMatrix4fv(camera.M_matrixID, 1, GL_FALSE, &modelMatrix[0][0]);
+	glUniformMatrix4fv(camera.V_matrixID, 1, GL_FALSE, &viewMatrix[0][0]);
+	glUniformMatrix4fv(camera.inv_V_matrixID, 1, GL_FALSE, &invViewMatrix[0][0]);
+	glUniformMatrix4fv(camera.P_matrixID, 1, GL_FALSE, &projectionMatrix[0][0]);
 	glUniform3f(camera.cameraForwardID, camera.forward.x, camera.forward.y, camera.forward.z);
 
 	glDrawArrays(renderMode, 0, numIndices);	//GL_TRIANGLE_STRIP or GL_TRIANGLES

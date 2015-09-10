@@ -1,0 +1,24 @@
+#version 330 core
+ 
+// Input vertex data, different for all executions of this shader.
+layout(location = 0) in vec3 vertexPosition;
+layout(location = 1) in vec2 vertexUV;
+layout(location = 2) in vec3 vertexNormal;
+
+out vec2 UV;
+out vec3 position;
+out vec3 varyingNormalDirection;
+
+uniform mat4 M_matrix;
+uniform mat4 V_matrix;
+uniform mat4 P_matrix;
+
+void main() {
+	position = (M_matrix * vec4(vertexPosition, 0.0f)).xyz;
+
+	mat4 normalMatrix = transpose(inverse(M_matrix));
+	varyingNormalDirection = normalize(normalMatrix * vec4(vertexNormal, 0.0f)).xyz;
+
+	mat4 MVP = P_matrix * V_matrix * M_matrix;
+	gl_Position = MVP * vec4(vertexPosition, 1.0f);
+}

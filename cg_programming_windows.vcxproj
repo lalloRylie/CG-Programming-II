@@ -126,6 +126,8 @@
     <None Include="Assets\Shaders\BasicFragmentShader.fragmentshader" />
     <None Include="Assets\Shaders\BasicVertexShader.vertexshader" />
     <None Include="Assets\Shaders\FlattenShader.vertexshader" />
+    <None Include="Assets\Shaders\test.fragmentshader" />
+    <None Include="Assets\Shaders\test.vertexshader" />
     <None Include="Assets\Shaders\TexturedFragmentShader.fragmentshader" />
     <None Include="Assets\Shaders\TexturedSpec.fragmentshader" />
     <None Include="Assets\Shaders\TexturedSpec.vertexshader" />

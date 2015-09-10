@@ -96,5 +96,7 @@
     </None>
     <None Include="Assets\Shaders\TexturedSpec.fragmentshader" />
     <None Include="Assets\Shaders\TexturedSpec.vertexshader" />
+    <None Include="Assets\Shaders\test.vertexshader" />
+    <None Include="Assets\Shaders\test.fragmentshader" />
   </ItemGroup>
 </Project>
