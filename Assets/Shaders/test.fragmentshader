@@ -21,7 +21,7 @@ struct lightSource {
 	vec3 spotDirection;
 };
 
-const int numberOfLights = 3;
+const int numberOfLights = 4;
 lightSource lights[numberOfLights];
 
 lightSource light0 = lightSource(
@@ -51,6 +51,15 @@ lightSource light2 = lightSource(
 	vec3(0.0f, 0.0f, 0.0f)
 );
 
+lightSource light3 = lightSource(
+	vec4(0.0f, 20.0f, 0.0f, 1.0f),
+	vec4(10.0f, 10.0f, 10.0f, 1.0f),
+	vec4(1.0f, 1.0f, 1.0f, 1.0f),
+	1.0f, 2.0f, 0.0f,
+	15.0f, 0.0f,
+	vec3(0.0f, -1.0f, 0.0f)
+);
+
 vec4 scene_ambient = vec4(0.2f, 0.2f, 0.2f, 1.0f);
 
 struct material {
@@ -71,6 +80,7 @@ void main() {
 	lights[0] = light0;
 	lights[1] = light1;
 	lights[2] = light2;
+	lights[3] = light3;
 
 	vec3 normalDirection = normalize(varyingNormalDirection);
 	vec3 viewDirection = normalize(inv_V_matrix * vec4(0.0f, 0.0f, 0.0f, 1.0f) - vec4(position, 0.0f)).xyz;

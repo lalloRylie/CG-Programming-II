@@ -31,17 +31,18 @@ static void FillBuffer(u8 *src, u8 *dest, u16 &index, u16 const &length){
 
 //TODO: Add functionality later...
 World::World(){
-	//plane = new Plane(1, 1);
-	//plane->SetScale(vec3(0.15f));
-	//plane->SetPosition(vec3(-1.0f, -1.0f, 0.0f));
+	mesh1 = new Mesh();
+	mesh1->BuildMesh("./Assets/Models/plane.obj");
+	mesh1->SetScale(vec3(1.0));
+	mesh1->SetPosition(vec3(0.0f, 0.0f, 0.0f));
 
 	//cube = new Cube();
 
 	mesh = new Mesh();
 	mesh->BuildMesh("./Assets/Models/arceus.obj");
-	mesh->SetPosition(vec3(0.0f));
-	mesh->SetRotation(1.2f);
 	mesh->SetScale(vec3(1.0f));
+	mesh->SetRotation(1.2f);
+	mesh->SetPosition(vec3(0.0f));
 
 	texture1 = mesh->LoadBMP("./Assets/Textures/arceus.bmp");
 	
@@ -145,11 +146,8 @@ World::World(){
 
 //TODO: Add functionality later...
 World::~World(){
-	//delete plane;
-	//plane = NULL;
-
-	//delete cube;
-	//cube = NULL;
+	delete mesh1;
+	mesh1 = NULL;
 
 	delete mesh;
 	mesh = NULL;
@@ -157,14 +155,11 @@ World::~World(){
 
 void World::Update(const float& deltaTime){
 
-	//plane->Update(deltaTime);
-	//cube->Update(deltaTime);
+	mesh1->Update(deltaTime);
 	mesh->Update(deltaTime);
 }
 
 void World::Render(const Camera& camera){
-	//plane->Render(camera);
-	//cube->Render(camera);
-
+	mesh1->Render(camera);
 	mesh->Render(camera);
 }

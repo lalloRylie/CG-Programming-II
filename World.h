@@ -29,8 +29,6 @@ class World{
 		unsigned char FindChar(const char* buffer, const char& c);
 		
 	private:
-		Plane* plane;
-		Cube* cube;
 		Mesh* mesh; 
 		Mesh* mesh1;
 		u8* levelBuffer;
