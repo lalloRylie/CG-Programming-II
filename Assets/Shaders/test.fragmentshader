@@ -26,7 +26,7 @@ lightSource lights[numberOfLights];
 
 lightSource light0 = lightSource(
 	vec4(20.0f, 0.0f, 0.0f, 1.0f),
-	vec4(5.0f, 0.0f, 0.0f, 1.0f),
+	vec4(7.5f, 0.0f, 0.0f, 1.0f),
 	vec4(1.0f, 1.0f, 1.0f, 1.0f),
 	0.0f, 1.0f, 0.0f,
 	180.0f, 0.0f,
@@ -35,7 +35,7 @@ lightSource light0 = lightSource(
 
 lightSource light1 = lightSource(
 	vec4(-20.0f, 0.0f, 0.0f, 1.0f),
-	vec4(0.0f, 5.0f, 0.0f, 1.0f),
+	vec4(0.0f, 7.5f, 0.0f, 1.0f),
 	vec4(1.0f, 1.0f, 1.0f, 1.0f),
 	0.0f, 1.0f, 0.0f,
 	180.0f, 0.0f,
@@ -44,7 +44,7 @@ lightSource light1 = lightSource(
 
 lightSource light2 = lightSource(
 	vec4(0.0f, 20.0f, 0.0f, 1.0f),
-	vec4(0.0f, 0.0f, 5.0f, 1.0f),
+	vec4(0.0f, 0.0f, 7.5f, 1.0f),
 	vec4(1.0f, 1.0f, 1.0f, 1.0f),
 	0.0f, 1.0f, 0.0f,
 	180.0f, 0.0f,
@@ -52,7 +52,7 @@ lightSource light2 = lightSource(
 );
 
 lightSource light3 = lightSource(
-	vec4(0.0f, 20.0f, 0.0f, 1.0f),
+	vec4(9.0f, 20.0f, 0.0f, 1.0f),
 	vec4(10.0f, 10.0f, 10.0f, 1.0f),
 	vec4(1.0f, 1.0f, 1.0f, 1.0f),
 	1.0f, 2.0f, 0.0f,
@@ -126,6 +126,5 @@ void main() {
 		}
 		totalLighting = totalLighting + diffuseReflection + specularReflection;
 	}
-
 	color = vec4(totalLighting, 1.0f);
 }

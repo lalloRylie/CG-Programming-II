@@ -1,0 +1,29 @@
+#version 330 core
+ 
+layout(location = 0) in vec3 vertexPosition_modelspace;
+layout(location = 1) in vec2 vertexUV;
+layout(location = 2) in vec3 vertexNormal;
+ 
+out vec2 UV;
+out vec3 normals;
+ 
+uniform float time;
+uniform mat4 M_matrix;
+uniform mat4 V_matrix;
+uniform mat4 P_matrix;
+ 
+void main(){
+	mat4 MVP = P_matrix * V_matrix * M_matrix;
+
+	vec3 vertices = vertexPosition_modelspace;
+	//vertices.y = sin(0.3f * vertices.x + time) * cos(0.15 * vertices.z + time) * 2;
+	vertices.x += sin(0.8f * vertices.y + time) * cos(3.0f * vertices.z + time) *  0.08f;
+	vertices.y += sin(0.8f * vertices.x + time) * cos(3.0f * vertices.z + time) *  0.08f;
+	vertices.z += sin(0.8f * vertices.x + time) * cos(3.0f * vertices.y + time) *  0.08f;
+
+    gl_Position =  MVP * vec4(vertices, 1.0f);
+ 	
+    //UV = vertexUV - vec2(time/100.0f, time/50.0f);
+	UV = vertexUV;
+	normals = vertexNormal;
+}

@@ -315,7 +315,7 @@ mat4 Object::BeforeRender(){
 	mat4 identityMatrix = mat4(1.0f);  //model in object space
 	mat4 scaleMatrix = glm::scale(identityMatrix, scale);
 	mat4 translateMatrix = translate(identityMatrix, position);
-	mat4 rotationMatrix = glm::rotate(identityMatrix, rotAngle, vec3(0.0f, 1.0f, 0.0f));
+	mat4 rotationMatrix = glm::rotate(identityMatrix, rotAngle, vec3(0.5f, 1.0f, 0.0f));
 	mat4 modelMatrix = rotationMatrix * translateMatrix * scaleMatrix; //model in world space
 
 	// right to left multiplication

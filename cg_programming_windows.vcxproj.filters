@@ -80,12 +80,6 @@
       <Filter>Resource Files</Filter>
     </None>
     <None Include="Assets\Shaders\FlattenShader.vertexshader" />
-    <None Include="Assets\Shaders\WaterShader.vertexshader">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="Assets\Shaders\WaterShader.fragmentshader">
-      <Filter>Resource Files</Filter>
-    </None>
     <None Include="Assets\Shaders\ToonShader.vertexshader" />
     <None Include="Assets\Shaders\ToonShader.fragmentshader" />
     <None Include="Assets\Shaders\TexturedVertexShader.vertexshader">
@@ -98,5 +92,11 @@
     <None Include="Assets\Shaders\TexturedSpec.vertexshader" />
     <None Include="Assets\Shaders\test.vertexshader" />
     <None Include="Assets\Shaders\test.fragmentshader" />
+    <None Include="Assets\Shaders\Sun.vertexshader">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Assets\Shaders\Sun.fragmentshader">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

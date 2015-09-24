@@ -134,8 +134,8 @@
     <None Include="Assets\Shaders\TexturedVertexShader.vertexshader" />
     <None Include="Assets\Shaders\ToonShader.fragmentshader" />
     <None Include="Assets\Shaders\ToonShader.vertexshader" />
-    <None Include="Assets\Shaders\WaterShader.fragmentshader" />
-    <None Include="Assets\Shaders\WaterShader.vertexshader" />
+    <None Include="Assets\Shaders\Sun.fragmentshader" />
+    <None Include="Assets\Shaders\Sun.vertexshader" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
